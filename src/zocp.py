@@ -23,41 +23,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def dict_get(d, keys):
-    """
-    returns a value from a nested dict
-    keys argument must be list
-
-    raises a KeyError exception if failed
-    """
-    for key in keys:
-        d = d[key]
-    return d
-
-def dict_set(d, keys, value):
-    """
-    sets a value in a nested dict
-    keys argument must be a list
-    returns the new updated dict
-
-    raises a KeyError exception if failed
-    """
-    for key in keys[:-1]:
-        d = d[key]
-    d[keys[-1]] = value
-
-def dict_get_keys(d, keylist=""):
-    for k, v in d.items():
-        if isinstance(v, dict):
-            # entering branch add seperator and enter
-            keylist=keylist+".%s" %k
-            keylist = dict_get_keys(v, keylist)
-        else:
-            # going back save this branch
-            keylist = "%s.%s\n%s" %(keylist, k, keylist)
-            #print(keylist)
-    return keylist
-
 # http://stackoverflow.com/questions/38987/how-can-i-merge-union-two-python-dictionaries-in-a-single-expression?rq=1
 def dict_merge(a, b, path=None):
     """
@@ -169,20 +134,6 @@ class ZOCP(Pyre):
             self.capability['objects'][name]['type'] = type
         self._cur_obj = self.capability['objects'][name]
         self._cur_obj_keys = ('objects', name)
-
-    def _register_param(self, name, type_hint, update=False, access='r', min=None, max=None, step=None):
-        newdata = {'value': int, 'typeHint': typehint, 'access':access }
-        if min:
-            self._cur_obj[name]['min'] = min
-        if max:
-            self._cur_obj[name]['max'] = max
-        if step:
-            self._cur_obj[name]['step'] = step
-        if update and self._cur_obj.get(name):
-            merge_dict(self._cur_obj[name], newdata)
-        else:
-            self._cur_obj[name] = newdata
-        self._on_modified(data={name: newdata})
 
     def register_int(self, name, int, access='r', min=None, max=None, step=None):
         """
