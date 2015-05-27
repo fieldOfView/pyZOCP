@@ -612,9 +612,9 @@ class ZOCP(Pyre):
                 else:
                     try:
                         func = getattr(self, 'handle_'+method)
-                        func(msg[method])
+                        func(msg[method], peer, name, grp)
                     except:
-                        raise Exception('No %s method on resource: %s' %(method,object))
+                        logger.warning('No method to handle message of type %s' % method)
 
     def _handle_GET(self, data, peer, name, grp=None):
         """
