@@ -613,7 +613,7 @@ class ZOCP(Pyre):
                     try:
                         func = getattr(self, 'handle_'+method)
                         func(msg[method], peer, name, grp)
-                    except:
+                    except AttributeError:
                         logger.warning('No method to handle message of type %s' % method)
 
     def _handle_GET(self, data, peer, name, grp=None):
