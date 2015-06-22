@@ -84,5 +84,5 @@ if __name__ == '__main__':
     z = SubscribableNode("subscribable@%s" % socket.gethostname())
     z.run()
     z.stop()
-    z = None
+    del z
     print("FINISH")

@@ -775,7 +775,7 @@ class ZOCP(Pyre):
         if recv_peer != peer:
             # check if this should be forwarded (third party unsubscription request)
             logger.debug("ZOCP UNSUB   : forwarding unsubscription request: %s" % data)
-            self.signal_unsubscribe(recv_peer, receiver, emit_peer, emitter)
+            self.signal_unsubscribe(emit_peer, emitter, recv_peer, receiver)
             return
 
         if emitter is not None:
